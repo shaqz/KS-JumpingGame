@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
     <title>JumpingGame</title>
-</head>
-<body>
+  </head>
+  <body>
+    <section class="welcome-section">
+      <div class="welcome-text">
+        <h2>Welcome to the Jumping Game!</h2>
+        <p>Help the monkey overcome all obstacles</p>
+      </div>
+      <button type="button" class="start-game-btn">Start the Game</button>
+    </section>
+    <section class="game-section">
+      <div class="box-canvas">
+        <div class="tree"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+      </div>
+      <div class="monkey body" id="character">
+        <div class="face"></div>
+      </div>
+    </section>
+    <section class="ground" id="ground"></section>
     <script src="index.js"></script>
-</body>
+  </body>
 </html>
