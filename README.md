@@ -1,2 +1,2 @@
-# KS-Jumping-Game
+# Jumping-Game
  
