@@ -1,3 +1,3 @@
 # Jumping-Game
-[Let's play the game](https://shaqz.github.io/KS-JumpingGame/){:target"_blank" rel="noopener}
+[Let's play the game](https://shaqz.github.io/KS-JumpingGame/)
  
