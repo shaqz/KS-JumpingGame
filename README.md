@@ -1,5 +1,5 @@
 # Jumping-Game
-This is a basic jumping game developed using HTML, CSS, and JavaScript, inspired by the T-Rex game found in Google Chrome. The game provides a simple yet entertaining experience where the player controls a character who must jump over obstacles to score points.
+This is a basic jumping game developed using HTML, CSS and JavaScript, inspired by the T-Rex game found in Google Chrome. The game provides a simple yet entertaining experience where the player controls a character who must jump over obstacles to score points.
 
 ## How to Play
 * Use the spacebar key to make the character jump.
