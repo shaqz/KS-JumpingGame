@@ -20,6 +20,16 @@ body {
   background-color: #196f3d;
   align-self: flex-end;
 }
+
+.obstacle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  bottom: 100px;
+  background-color: #131200;
+  border-radius: 50%;
+}
+
 .game-section {
   flex-grow: 1;
   width: 100%;
