@@ -155,9 +155,6 @@ function handleCollision() {
   lossSound.play();
   ref.restartGameBtn.style.display = "block"; 
   clearInterval(collisionInterval);
-  setTimeout(() => {
-    alert(`GAME OVER! Your total score: ${score}`);
-  }, 0);
   location.reload();
 }
 
