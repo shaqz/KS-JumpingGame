@@ -5,6 +5,7 @@ const ref = {
   startGameBtn: document.querySelector(".start-game-btn"),
   character: document.querySelector("#character"),
   ground: document.querySelector("#ground"),
+  exitGameBtn:document.querySelector(".exit-btn"),
   obstacles: document.querySelector(".obstacles"),
   scoreText: document.querySelector(".score"),
   displayScore: document.querySelector("#score"),
@@ -25,12 +26,16 @@ lossSound.volume = 0.3;
 winSound.volume = 0.3;
 let bgSoundIntervalID = null;
 
+ref.exitGameBtn.addEventListener("click", exitGame);
 ref.startGameBtn.addEventListener("click", onstartGameBtnClick);
 
 function onstartGameBtnClick() {
+  exitConfirmation = false;
+  gameOver = false;
   ref.welcomeText.classList.add("visually-hidden");
   ref.scoreText.classList.remove("visually-hidden");
   ref.startGameBtn.style.display = "none";
+  ref.exitGameBtn.classList.remove("visually-hidden");
   document.addEventListener("keydown", keyboardControl);
   generateObstacle();
   bgSoundIntervalID = setInterval(gameBgSoundPlay, 300);
@@ -154,4 +159,31 @@ function gameWon() {
 
 function gameBgSoundPlay() {
   gameBgSound.play();
+}
+
+let exitConfirmation = false;
+function exitGame(){
+  if(!gameOver && !exitConfirmation){
+  const confirmExit = confirm("Are you sure want to exit the game?");
+  if(confirmExit){
+      gameOver =true;
+      clearInterval(bgSoundIntervalID);
+      gameBgSound.pause();
+      ref.exitGameBtn.classList.add("visually-hidden");
+      ref.welcomeText.classList.remove("visually-hidden");
+      ref.startGameBtn.classList.remove("visually-hidden");
+      ref.scoreText.classList.add("visually-hidden");
+      resetGame();
+      location.reload();
+  }else {
+    exitConfirmation = false;
+  }
+  }
+}
+function resetGame(){
+  charJump = false;
+  gameOver = true;
+  velocity = 0;
+  score = 0;
+  
 }
