@@ -65,26 +65,19 @@ function jump() {
   }
 }
 
-// Function to generate obstacles
 function generateObstacle() {
-  // Creation of the Obstacles:
-
   const obstacle = document.createElement("div");
   obstacle.classList.add("obstacle");
 
-  // Create an <img> element for the zombie image
   const zombieImage = document.createElement("img");
   zombieImage.src = getRandomZombieImageUrl(); // This function will return a random zombie URL
   zombieImage.classList.add("zombie-image");
-
-  // Append the zombie image to the obstacle
+  
   obstacle.appendChild(zombieImage);
-
-  // Append the obstacle to the obstacles container
   ref.obstacles.appendChild(obstacle);
 
-  let obstaclePosition = 1000; // Initial position of the obstacle
-  let obstacleSpeed = 5; // Speed at which obstacle moves towards the character
+  let obstaclePosition = 1000;
+  let obstacleSpeed = 5;
 
   obstacle.style.left = obstaclePosition + "px";
 
@@ -93,7 +86,6 @@ function generateObstacle() {
       obstaclePosition -= obstacleSpeed;
       obstacle.style.left = obstaclePosition + "px";
 
-      // Remove obstacle when it goes out of the screen
       if (obstaclePosition < -100) {
         clearInterval(obstacleInterval);
         ref.obstacles.removeChild(obstacle);
@@ -103,7 +95,7 @@ function generateObstacle() {
   }, 20);
 
   if (!gameOver) {
-    setTimeout(generateObstacle, 3000); // Generate obstaclesat regular intervals
+    setTimeout(generateObstacle, 3000);
   }
 }
 
@@ -118,40 +110,31 @@ function getRandomZombieImageUrl() {
   return `images/obstacles/zombies/${zombieImages[randomIndex]}`;
 }
 
-// Function to detect collision
 function detectCollision(currentObstacle) {
-  const characterRect = ref.character.getBoundingClientRect(); // Get bounding box of the character
-  // console.log(characterRect);
-
-  // Loop through all obstacles (zombies)
+  const characterRect = ref.character.getBoundingClientRect();
   const zombies = document.querySelectorAll(".obstacle");
   zombies.forEach((zombie) => {
-    const zombieRect = zombie.getBoundingClientRect(); // Get bounding box of the zombie
-    // console.log(zombieRect.right);
-    // Check for collision
+    const zombieRect = zombie.getBoundingClientRect();
     if (
       zombieRect.right < characterRect.right + 50 &&
       zombieRect.right > characterRect.right - 50 &&
       characterRect.top > 260
     ) {
-      // console.log(characterRect.top);
       handleCollision();
     }
   });
 }
 
-// Function to handle collision
 function handleCollision() {
-  // console.log("Collision Handled!");
   gameOver = true;
   clearInterval(bgSoundIntervalID);
   gameBgSound.pause();
   lossSound.play();
   alert(`GAME OVER! Your total score: ${score}`);
-  clearInterval(collisionInterval); // Stop the interval for collision detection
+  clearInterval(collisionInterval); 
 }
 
-let collisionInterval = setInterval(detectCollision, 500); // Start the collision detection interval
+let collisionInterval = setInterval(detectCollision, 500);
 
 function showScore() {
   score++;
