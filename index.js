@@ -10,7 +10,6 @@ const ref = {
   exitGameBtn: document.querySelector(".exit-btn"),
   obstacles: document.querySelector(".obstacles"),
   scoreText: document.querySelector(".score"),
-  finalScoreText: document.querySelector(".final-score"),
   displayScore: document.querySelector("#score"),
 };
 
@@ -28,7 +27,6 @@ jumpingSound.volume = 0.3;
 lossSound.volume = 0.3;
 winSound.volume = 0.3;
 let bgSoundIntervalID = null;
-let isWon = false;
 
 ref.exitGameBtn.addEventListener("click", exitGame);
 ref.startGameBtn.addEventListener("click", onstartGameBtnClick);
@@ -58,14 +56,14 @@ function keyboardControl(event) {
 }
 
 function jump() {
-  velocity=0;
+  velocity = 0;
   if (!charJump && !gameOver) {
     let position = 200;
     let jumpInterval = setInterval(function () {
-      position+=velocity;
-      velocity-=gravity;
+      position += velocity;
+      velocity -= gravity;
       ref.character.style.bottom = position + "px";
-      
+
       if (position >= 350) {
         clearInterval(jumpInterval);
         let fallInterval = setInterval(function () {
@@ -74,7 +72,7 @@ function jump() {
             charJump = false;
           } else {
             position -= velocity;
-            velocity +=gravity;
+            velocity += gravity;
             ref.character.style.bottom = position + "px";
           }
         }, 20);
@@ -109,8 +107,11 @@ function generateObstacle() {
 
       if (obstaclePosition < -50) {
         clearInterval(obstacleInterval);
-        try {ref.obstacles.removeChild(obstacle);}
-        catch {console.log("errorrr")}
+        try {
+          ref.obstacles.removeChild(obstacle);
+        } catch {
+          console.log("errorrr");
+        }
         showScore();
       }
     }
@@ -137,7 +138,6 @@ function detectCollision() {
   const zombies = document.querySelectorAll(".obstacle");
   zombies.forEach((zombie) => {
     const zombieRect = zombie.getBoundingClientRect();
-    console.log(`characterRect.right: ${characterRect.right} - zombieRect.right: ${zombieRect.right}`)
     if (
       zombieRect.right < characterRect.right + 50 &&
       zombieRect.right > characterRect.right - 50 &&
@@ -153,8 +153,11 @@ function handleCollision() {
   clearInterval(bgSoundIntervalID);
   gameBgSound.pause();
   lossSound.play();
-  ref.restartGameBtn.style.display = "block"; 
+  ref.restartGameBtn.style.display = "block";
   clearInterval(collisionInterval);
+  ref.startGameBtn.classList.add("visually-hidden");
+  ref.scoreText.textContent = `Game over! Your total score: ${score}`;
+  ref.exitGameBtn.classList.add("visually-hidden");
 }
 
 let collisionInterval = setInterval(detectCollision, 200);
@@ -166,18 +169,17 @@ function showScore() {
 }
 
 function gameWon() {
-  if (score === 3) {
-    ref.obstacles.querySelectorAll('.obstacle').forEach(obstacle => {
-    obstacle.remove();
-      });
+  if (score === 5) {
+    ref.obstacles.querySelectorAll(".obstacle").forEach((obstacle) => {
+      obstacle.remove();
+    });
     gameOver = true;
-    isWon = true;
     clearInterval(bgSoundIntervalID);
     gameBgSound.pause();
     winSound.play();
-    ref.scoreText.classList.remove("visually-hidden");
     ref.restartGameBtn.style.display = "block";
-    // ref.finalScoreText.textContent = `You won the game! Your total score: ${score}`;
+    ref.scoreText.textContent = `You won the game! Your total score: ${score}`;
+    ref.exitGameBtn.classList.add("visually-hidden");
   }
 }
 
@@ -211,8 +213,8 @@ function resetGame() {
   score = 0;
   ref.displayScore.textContent = score;
   ref.restartGameBtn.style.display = "none";
-  ref.obstacles.querySelectorAll('.obstacle').forEach(obstacle => {
+  ref.obstacles.querySelectorAll(".obstacle").forEach((obstacle) => {
     obstacle.remove();
   });
-   ref.scoreText.classList.remove("visually-hidden");
+  ref.scoreText.classList.remove("visually-hidden");
 }
