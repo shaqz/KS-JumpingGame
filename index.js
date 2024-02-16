@@ -92,20 +92,53 @@ function generateObstacle() {
   if (!gameOver) {
     setTimeout(generateObstacle, 3000); // Generate obstaclesat regular intervals
   }
+  
 }
 
 function getRandomZombieImageUrl() {
   const zombieImages = [
-    "zombie1.jpg",
-    "zombie2.jpg",
-    "zombie3.jpeg",
-    "zombie4.jpg"
+    "zombie1.png",
+    "zombie2.png",
+    "zombie3.png",
+    "zombie4.png"
   ];
   const randomIndex = Math.floor(Math.random() * zombieImages.length);
   return `images/obstacles/zombies/${zombieImages[randomIndex]}`;
 }
 
 // Function to detect collision
-function detectCollision(currentObstacle) {
+function detectCollision(currentObstacle){
+    const characterRect = ref.character.getBoundingClientRect(); // Get bounding box of the character
+    // console.log(characterRect);
+    
+    // Loop through all obstacles (zombies)
+    const zombies = document.querySelectorAll('.obstacle');
+    zombies.forEach(zombie => {
+      const zombieRect = zombie.getBoundingClientRect(); // Get bounding box of the zombie
+      // console.log(zombieRect.right);
+      // Check for collision
+      if (
+        zombieRect.right <characterRect.right +50 && 
+        zombieRect.right > characterRect.right -50 &&
+        characterRect.top > 260
+        
+        ) 
+        {
+          console.log(characterRect.top)
+          handleCollision();
+        }
+    });
 
 }
+
+// Function to handle collision
+function handleCollision() {
+ 
+  console.log("Collision Handled!");
+  gameOver = true; 
+  alert("GAME OVER");
+  clearInterval(collisionInterval); // Stop the interval for collision detection
+
+}
+
+let collisionInterval = setInterval(detectCollision, 500); // Start the collision detection interval
