@@ -53,7 +53,7 @@ function jump() {
             clearInterval(fallInterval);
             charJump = false;
           } else {
-            position -= 5;
+            position -= 3;
             ref.character.style.bottom = position + "px";
           }
         }, 20);
