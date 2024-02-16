@@ -5,7 +5,7 @@ const ref = {
   startGameBtn: document.querySelector(".start-game-btn"),
   character: document.querySelector("#character"),
   ground: document.querySelector("#ground"),
-  exitGameBtn:document.querySelector(".exit-btn"),
+  exitGameBtn: document.querySelector(".exit-btn"),
   obstacles: document.querySelector(".obstacles"),
   scoreText: document.querySelector(".score"),
   displayScore: document.querySelector("#score"),
@@ -40,6 +40,7 @@ function onstartGameBtnClick() {
   generateObstacle();
   bgSoundIntervalID = setInterval(gameBgSoundPlay, 300);
 }
+
 function keyboardControl(event) {
   if (event.code === "Space" || event.code === "ArrowUp") {
     jump();
@@ -77,7 +78,7 @@ function generateObstacle() {
   const zombieImage = document.createElement("img");
   zombieImage.src = getRandomZombieImageUrl();
   zombieImage.classList.add("zombie-image");
-  
+
   obstacle.appendChild(zombieImage);
   ref.obstacles.appendChild(obstacle);
 
@@ -136,7 +137,7 @@ function handleCollision() {
   gameBgSound.pause();
   lossSound.play();
   alert(`GAME OVER! Your total score: ${score}`);
-  clearInterval(collisionInterval); 
+  clearInterval(collisionInterval);
 }
 
 let collisionInterval = setInterval(detectCollision, 500);
@@ -162,11 +163,11 @@ function gameBgSoundPlay() {
 }
 
 let exitConfirmation = false;
-function exitGame(){
-  if(!gameOver && !exitConfirmation){
-  const confirmExit = confirm("Are you sure want to exit the game?");
-  if(confirmExit){
-      gameOver =true;
+function exitGame() {
+  if (!gameOver && !exitConfirmation) {
+    const confirmExit = confirm("Are you sure want to exit the game?");
+    if (confirmExit) {
+      gameOver = true;
       clearInterval(bgSoundIntervalID);
       gameBgSound.pause();
       ref.exitGameBtn.classList.add("visually-hidden");
@@ -175,15 +176,14 @@ function exitGame(){
       ref.scoreText.classList.add("visually-hidden");
       resetGame();
       location.reload();
-  }else {
-    exitConfirmation = false;
-  }
+    } else {
+      exitConfirmation = false;
+    }
   }
 }
-function resetGame(){
+function resetGame() {
   charJump = false;
   gameOver = true;
   velocity = 0;
   score = 0;
-  
 }

@@ -309,11 +309,11 @@ body {
   line-height: 1.5;
   margin-top: 50px;
 }
-button.exit-btn{
+button.exit-btn {
   margin: 10px 10px;
   position: absolute;
-  top:0;
-  right:0;
+  top: 0;
+  right: 0;
   background-color: #48c9b0;
   border: none;
   padding: 15px 25px;
@@ -328,7 +328,4 @@ button.exit-btn{
 .exit-btn:hover {
   transform: scale(1.1);
   transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-.visually-hidden{
-  display:block;
 }
