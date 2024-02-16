@@ -28,6 +28,7 @@ jumpingSound.volume = 0.3;
 lossSound.volume = 0.3;
 winSound.volume = 0.3;
 let bgSoundIntervalID = null;
+let isWon = false;
 
 ref.exitGameBtn.addEventListener("click", exitGame);
 ref.startGameBtn.addEventListener("click", onstartGameBtnClick);
@@ -154,6 +155,10 @@ function handleCollision() {
   lossSound.play();
   ref.restartGameBtn.style.display = "block"; 
   clearInterval(collisionInterval);
+  setTimeout(() => {
+    alert(`GAME OVER! Your total score: ${score}`);
+  }, 0);
+  location.reload();
 }
 
 let collisionInterval = setInterval(detectCollision, 200);
@@ -170,6 +175,7 @@ function gameWon() {
     obstacle.remove();
       });
     gameOver = true;
+    isWon = true;
     clearInterval(bgSoundIntervalID);
     gameBgSound.pause();
     winSound.play();
@@ -185,7 +191,7 @@ function gameBgSoundPlay() {
 
 let exitConfirmation = false;
 function exitGame() {
-  if (!gameOver && !exitConfirmation) {
+  if ((!gameOver && !exitConfirmation) || isWon) {
     const confirmExit = confirm("Are you sure want to exit the game?");
     if (confirmExit) {
       gameOver = true;
