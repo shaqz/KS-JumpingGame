@@ -25,14 +25,14 @@ body {
   position: absolute;
   width: 60px;
   height: 60px;
-  bottom: 100px; 
+  bottom: 100px;
 }
 
 .zombie-image {
   position: absolute;
-    width: 80px;
-    height: 150px;
-    bottom: 0px;
+  width: 80px;
+  height: 150px;
+  bottom: 0px;
 }
 
 .game-section {
@@ -300,4 +300,12 @@ body {
 .leaf:nth-child(5)::after {
   top: 0;
   transform: rotate(85deg);
+}
+
+.score {
+  text-align: center;
+  font-size: 30px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  line-height: 1.5;
+  margin-top: 50px;
 }
