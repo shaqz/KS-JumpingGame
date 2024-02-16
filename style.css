@@ -25,9 +25,14 @@ body {
   position: absolute;
   width: 60px;
   height: 60px;
-  bottom: 100px;
-  background-color: #131200;
-  border-radius: 50%;
+  bottom: 100px; 
+}
+
+.zombie-image {
+  position: absolute;
+    width: 80px;
+    height: 150px;
+    bottom: 0px;
 }
 
 .game-section {

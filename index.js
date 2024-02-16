@@ -29,7 +29,7 @@ let velocity =0;
 
 function jump(){
      if (!charJump && !gameOver) {
-      let position = 150;
+      let position = 400;
         let jumpInterval = setInterval(function () {
          if (position >= 350) {
             clearInterval(jumpInterval);
@@ -38,7 +38,7 @@ function jump(){
                 clearInterval(fallInterval);
                 charJump = false;
               } else {
-                position -= 10;
+                position -= 5;
                 ref.character.style.bottom = position + "px";
               }
             }, 20);
@@ -58,6 +58,17 @@ function generateObstacle() {
 
   const obstacle = document.createElement("div");
   obstacle.classList.add("obstacle");
+  
+
+   // Create an <img> element for the zombie image
+  const zombieImage = document.createElement("img");
+  zombieImage.src = getRandomZombieImageUrl(); // This function will return a random zombie URL
+  zombieImage.classList.add("zombie-image");
+  
+  // Append the zombie image to the obstacle
+  obstacle.appendChild(zombieImage);
+  
+  // Append the obstacle to the obstacles container
   ref.obstacles.appendChild(obstacle);
 
   let obstaclePosition = 1000; // Initial position of the obstacle
@@ -71,7 +82,7 @@ function generateObstacle() {
       obstacle.style.left = obstaclePosition + "px";
 
       // Remove obstacle when it goes out of the screen
-      if (obstaclePosition < -60) {
+      if (obstaclePosition < -100) {
         clearInterval(obstacleInterval);
         ref.obstacles.removeChild(obstacle);
       }
@@ -79,8 +90,19 @@ function generateObstacle() {
   }, 20);
 
   if (!gameOver) {
-    setTimeout(generateObstacle, 2500); // Generate obstaclesat regular intervals
+    setTimeout(generateObstacle, 3000); // Generate obstaclesat regular intervals
   }
+}
+
+function getRandomZombieImageUrl() {
+  const zombieImages = [
+    "zombie1.jpg",
+    "zombie2.jpg",
+    "zombie3.jpeg",
+    "zombie4.jpg"
+  ];
+  const randomIndex = Math.floor(Math.random() * zombieImages.length);
+  return `images/obstacles/zombies/${zombieImages[randomIndex]}`;
 }
 
 // Function to detect collision
