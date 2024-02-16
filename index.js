@@ -70,7 +70,7 @@ function generateObstacle() {
   obstacle.classList.add("obstacle");
 
   const zombieImage = document.createElement("img");
-  zombieImage.src = getRandomZombieImageUrl(); // This function will return a random zombie URL
+  zombieImage.src = getRandomZombieImageUrl();
   zombieImage.classList.add("zombie-image");
   
   obstacle.appendChild(zombieImage);
@@ -110,7 +110,7 @@ function getRandomZombieImageUrl() {
   return `images/obstacles/zombies/${zombieImages[randomIndex]}`;
 }
 
-function detectCollision(currentObstacle) {
+function detectCollision() {
   const characterRect = ref.character.getBoundingClientRect();
   const zombies = document.querySelectorAll(".obstacle");
   zombies.forEach((zombie) => {
