@@ -3,17 +3,20 @@ console.log("Welcome to the JumpingGame");
 const ref = {
   welcomeText: document.querySelector(".welcome-text"),
   startGameBtn: document.querySelector(".start-game-btn"),
+  restartGameBtn: document.querySelector(".restart-game-btn"),
   character: document.querySelector("#character"),
+  showScore: document.querySelector("#showScore"),
   ground: document.querySelector("#ground"),
   exitGameBtn: document.querySelector(".exit-btn"),
   obstacles: document.querySelector(".obstacles"),
   scoreText: document.querySelector(".score"),
+  finalScoreText: document.querySelector(".final-score"),
   displayScore: document.querySelector("#score"),
 };
 
 let charJump = false;
 let gameOver = false;
-const gravity = 0.9;
+const gravity = 0.8;
 let velocity = 0;
 let score = 0;
 let gameBgSound = new Audio("./audio/game-background.mp3");
@@ -28,6 +31,7 @@ let bgSoundIntervalID = null;
 
 ref.exitGameBtn.addEventListener("click", exitGame);
 ref.startGameBtn.addEventListener("click", onstartGameBtnClick);
+ref.restartGameBtn.addEventListener("click", restartGame);
 
 function onstartGameBtnClick() {
   exitConfirmation = false;
@@ -41,6 +45,10 @@ function onstartGameBtnClick() {
   bgSoundIntervalID = setInterval(gameBgSoundPlay, 300);
 }
 
+function restartGame() {
+  location.reload();
+}
+
 function keyboardControl(event) {
   if (event.code === "Space" || event.code === "ArrowUp") {
     jump();
@@ -49,9 +57,14 @@ function keyboardControl(event) {
 }
 
 function jump() {
+  velocity=0;
   if (!charJump && !gameOver) {
-    let position = 400;
+    let position = 200;
     let jumpInterval = setInterval(function () {
+      position+=velocity;
+      velocity-=gravity;
+      ref.character.style.bottom = position + "px";
+      
       if (position >= 350) {
         clearInterval(jumpInterval);
         let fallInterval = setInterval(function () {
@@ -59,7 +72,8 @@ function jump() {
             clearInterval(fallInterval);
             charJump = false;
           } else {
-            position -= 3;
+            position -= velocity;
+            velocity +=gravity;
             ref.character.style.bottom = position + "px";
           }
         }, 20);
@@ -92,9 +106,10 @@ function generateObstacle() {
       obstaclePosition -= obstacleSpeed;
       obstacle.style.left = obstaclePosition + "px";
 
-      if (obstaclePosition < -100) {
+      if (obstaclePosition < -50) {
         clearInterval(obstacleInterval);
-        ref.obstacles.removeChild(obstacle);
+        try {ref.obstacles.removeChild(obstacle);}
+        catch {console.log("errorrr")}
         showScore();
       }
     }
@@ -121,6 +136,7 @@ function detectCollision() {
   const zombies = document.querySelectorAll(".obstacle");
   zombies.forEach((zombie) => {
     const zombieRect = zombie.getBoundingClientRect();
+    console.log(`characterRect.right: ${characterRect.right} - zombieRect.right: ${zombieRect.right}`)
     if (
       zombieRect.right < characterRect.right + 50 &&
       zombieRect.right > characterRect.right - 50 &&
@@ -136,12 +152,11 @@ function handleCollision() {
   clearInterval(bgSoundIntervalID);
   gameBgSound.pause();
   lossSound.play();
-  alert(`GAME OVER! Your total score: ${score}`);
+  ref.restartGameBtn.style.display = "block"; 
   clearInterval(collisionInterval);
-  location.reload();
 }
 
-let collisionInterval = setInterval(detectCollision, 500);
+let collisionInterval = setInterval(detectCollision, 200);
 
 function showScore() {
   score++;
@@ -151,11 +166,16 @@ function showScore() {
 
 function gameWon() {
   if (score === 10) {
+    ref.obstacles.querySelectorAll('.obstacle').forEach(obstacle => {
+    obstacle.remove();
+      });
     gameOver = true;
     clearInterval(bgSoundIntervalID);
     gameBgSound.pause();
     winSound.play();
-    ref.scoreText.textContent = `You won the game! Your total score: ${score}`;
+    ref.scoreText.classList.remove("visually-hidden");
+    ref.restartGameBtn.style.display = "block";
+    // ref.finalScoreText.textContent = `You won the game! Your total score: ${score}`;
   }
 }
 
@@ -184,7 +204,13 @@ function exitGame() {
 }
 function resetGame() {
   charJump = false;
-  gameOver = true;
+  gameOver = false;
   velocity = 0;
   score = 0;
+  ref.displayScore.textContent = score;
+  ref.restartGameBtn.style.display = "none";
+  ref.obstacles.querySelectorAll('.obstacle').forEach(obstacle => {
+    obstacle.remove();
+  });
+   ref.scoreText.classList.remove("visually-hidden");
 }
