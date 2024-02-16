@@ -170,7 +170,7 @@ function showScore() {
 }
 
 function gameWon() {
-  if (score === 10) {
+  if (score === 3) {
     ref.obstacles.querySelectorAll('.obstacle').forEach(obstacle => {
     obstacle.remove();
       });
