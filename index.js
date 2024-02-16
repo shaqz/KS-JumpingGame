@@ -155,7 +155,6 @@ function handleCollision() {
   lossSound.play();
   ref.restartGameBtn.style.display = "block"; 
   clearInterval(collisionInterval);
-  location.reload();
 }
 
 let collisionInterval = setInterval(detectCollision, 200);
