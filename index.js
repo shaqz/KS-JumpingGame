@@ -138,6 +138,7 @@ function handleCollision() {
   lossSound.play();
   alert(`GAME OVER! Your total score: ${score}`);
   clearInterval(collisionInterval);
+  location.reload();
 }
 
 let collisionInterval = setInterval(detectCollision, 500);
