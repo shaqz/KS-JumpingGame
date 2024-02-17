@@ -11,7 +11,7 @@ const ref = {
   obstacles: document.querySelector(".obstacles"),
   scoreText: document.querySelector(".score"),
   displayScore: document.querySelector("#score"),
-  body: document.querySelector("body"),
+  monkeyFeet: document.querySelector(".face"),
 };
 
 let charJump = false;
@@ -42,7 +42,7 @@ function onstartGameBtnClick() {
   document.addEventListener("keydown", keyboardControl);
   generateObstacle();
   bgSoundIntervalID = setInterval(gameBgSoundPlay, 300);
-  ref.body.style.animation = "backgroundAnimation 15s linear infinite";
+  ref.monkeyFeet.style.animation = "increaseShadow 2s ease infinite alternate";
 }
 
 function restartGame() {
@@ -57,10 +57,10 @@ function keyboardControl(event) {
 }
 
 function jump() {
- if (!charJump && !gameOver) {
+  if (!charJump && !gameOver) {
     let position = 150;
     let jumpInterval = setInterval(function () {
-     if (position >= 450) {
+      if (position >= 450) {
         clearInterval(jumpInterval);
         let fallInterval = setInterval(function () {
           if (position <= 150) {
@@ -68,7 +68,7 @@ function jump() {
             charJump = false;
           } else {
             position -= 10;
-           ref.character.style.bottom = position + "px";
+            ref.character.style.bottom = position + "px";
           }
         }, 20);
       }
@@ -153,8 +153,8 @@ function handleCollision() {
   ref.startGameBtn.classList.add("visually-hidden");
   ref.scoreText.textContent = `Game over! Your total score: ${score}`;
   ref.exitGameBtn.classList.add("visually-hidden");
-  ref.body.style.animation = "none";
   clearTimeout(timeOutId);
+  ref.monkeyFeet.style.animation = "none";
 }
 
 let collisionInterval = setInterval(detectCollision, 200);
