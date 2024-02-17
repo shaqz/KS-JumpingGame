@@ -57,24 +57,18 @@ function keyboardControl(event) {
 }
 
 function jump() {
-  velocity = 0;
-  if (!charJump && !gameOver) {
-    let position = 200;
+ if (!charJump && !gameOver) {
+    let position = 150;
     let jumpInterval = setInterval(function () {
-      position += velocity;
-      velocity -= gravity;
-      ref.character.style.bottom = position + "px";
-
-      if (position >= 350) {
+     if (position >= 450) {
         clearInterval(jumpInterval);
         let fallInterval = setInterval(function () {
           if (position <= 150) {
             clearInterval(fallInterval);
             charJump = false;
           } else {
-            position -= velocity;
-            velocity += gravity;
-            ref.character.style.bottom = position + "px";
+            position -= 10;
+           ref.character.style.bottom = position + "px";
           }
         }, 20);
       }
@@ -116,7 +110,7 @@ function generateObstacle() {
         showScore();
       }
     }
-  }, 20);
+  }, 15);
 
   if (!gameOver) {
     timeOutId = setTimeout(generateObstacle, 3000);
