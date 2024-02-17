@@ -11,6 +11,7 @@ const ref = {
   obstacles: document.querySelector(".obstacles"),
   scoreText: document.querySelector(".score"),
   displayScore: document.querySelector("#score"),
+  body: document.querySelector("body"),
 };
 
 let charJump = false;
@@ -21,12 +22,11 @@ let score = 0;
 let gameBgSound = new Audio("./audio/game-background.mp3");
 let jumpingSound = new Audio("./audio/jump.mp3");
 let lossSound = new Audio("./audio/sad-trombone.mp3");
-let winSound = new Audio("./audio/success.mp3");
 gameBgSound.volume = 0.1;
 jumpingSound.volume = 0.3;
 lossSound.volume = 0.3;
-winSound.volume = 0.3;
 let bgSoundIntervalID = null;
+let timeOutId = null;
 
 ref.exitGameBtn.addEventListener("click", exitGame);
 ref.startGameBtn.addEventListener("click", onstartGameBtnClick);
@@ -42,6 +42,7 @@ function onstartGameBtnClick() {
   document.addEventListener("keydown", keyboardControl);
   generateObstacle();
   bgSoundIntervalID = setInterval(gameBgSoundPlay, 300);
+  ref.body.style.animation = "backgroundAnimation 15s linear infinite";
 }
 
 function restartGame() {
@@ -118,7 +119,7 @@ function generateObstacle() {
   }, 20);
 
   if (!gameOver) {
-    setTimeout(generateObstacle, 3000);
+    timeOutId = setTimeout(generateObstacle, 3000);
   }
 }
 
@@ -158,6 +159,8 @@ function handleCollision() {
   ref.startGameBtn.classList.add("visually-hidden");
   ref.scoreText.textContent = `Game over! Your total score: ${score}`;
   ref.exitGameBtn.classList.add("visually-hidden");
+  ref.body.style.animation = "none";
+  clearTimeout(timeOutId);
 }
 
 let collisionInterval = setInterval(detectCollision, 200);
@@ -165,22 +168,6 @@ let collisionInterval = setInterval(detectCollision, 200);
 function showScore() {
   score++;
   ref.displayScore.textContent = score;
-  gameWon();
-}
-
-function gameWon() {
-  if (score === 5) {
-    ref.obstacles.querySelectorAll(".obstacle").forEach((obstacle) => {
-      obstacle.remove();
-    });
-    gameOver = true;
-    clearInterval(bgSoundIntervalID);
-    gameBgSound.pause();
-    winSound.play();
-    ref.restartGameBtn.style.display = "block";
-    ref.scoreText.textContent = `You won the game! Your total score: ${score}`;
-    ref.exitGameBtn.classList.add("visually-hidden");
-  }
 }
 
 function gameBgSoundPlay() {
