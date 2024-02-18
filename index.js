@@ -62,7 +62,7 @@ function jump() {
   if (!charJump && !gameOver) {
     let position = 35;
     let jumpInterval = setInterval(function () {
-      if (position >= 100) {
+      if (position >= 140) {
         clearInterval(jumpInterval);
         let fallInterval = setInterval(function () {
           if (position <= 35) {
@@ -93,7 +93,7 @@ function generateObstacle() {
   ref.obstacles.appendChild(obstacle);
 
   let obstaclePosition = 1000;
-  let obstacleSpeed = 5;
+  let obstacleSpeed = 10;
 
   obstacle.style.left = obstaclePosition + "px";
 
@@ -132,13 +132,14 @@ function getRandomZombieImageUrl() {
 
 function detectCollision() {
   const characterRect = ref.character.getBoundingClientRect();
+
   const zombies = document.querySelectorAll(".obstacle");
   zombies.forEach((zombie) => {
     const zombieRect = zombie.getBoundingClientRect();
+
     if (
-      zombieRect.right < characterRect.right + 50 &&
-      zombieRect.right > characterRect.right - 50 &&
-      characterRect.top > 260
+      zombieRect.right < characterRect.right + 265 &&
+      characterRect.bottom > 102
     ) {
       handleCollision();
     }
@@ -157,6 +158,7 @@ function handleCollision() {
   ref.exitGameBtn.classList.add("visually-hidden");
   clearTimeout(timeOutId);
   ref.gameSection.style.animation = "none";
+  ref.mansBody.style.animation = "fadeOut 2s ease-in-out forwards";
 }
 
 let collisionInterval = setInterval(detectCollision, 200);
