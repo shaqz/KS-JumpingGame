@@ -11,7 +11,8 @@ const ref = {
   obstacles: document.querySelector(".obstacles"),
   scoreText: document.querySelector(".score"),
   displayScore: document.querySelector("#score"),
-  monkeyFeet: document.querySelector(".face"),
+  mansBody: document.querySelector("#man-body"),
+  gameSection: document.querySelector(".game-section"),
 };
 
 let charJump = false;
@@ -42,7 +43,8 @@ function onstartGameBtnClick() {
   document.addEventListener("keydown", keyboardControl);
   generateObstacle();
   bgSoundIntervalID = setInterval(gameBgSoundPlay, 300);
-  ref.monkeyFeet.style.animation = "increaseShadow 2s ease infinite alternate";
+  ref.mansBody.classList.add("body");
+  ref.gameSection.style.animation = "cloudsMovement 20s linear infinite";
 }
 
 function restartGame() {
@@ -58,21 +60,21 @@ function keyboardControl(event) {
 
 function jump() {
   if (!charJump && !gameOver) {
-    let position = 150;
+    let position = 35;
     let jumpInterval = setInterval(function () {
-      if (position >= 450) {
+      if (position >= 100) {
         clearInterval(jumpInterval);
         let fallInterval = setInterval(function () {
-          if (position <= 150) {
+          if (position <= 35) {
             clearInterval(fallInterval);
             charJump = false;
           } else {
-            position -= 10;
+            position -= 15;
             ref.character.style.bottom = position + "px";
           }
         }, 20);
       }
-      position += 30;
+      position += 15;
       ref.character.style.bottom = position + "px";
       charJump = true;
     }, 20);
@@ -154,7 +156,7 @@ function handleCollision() {
   ref.scoreText.textContent = `Game over! Your total score: ${score}`;
   ref.exitGameBtn.classList.add("visually-hidden");
   clearTimeout(timeOutId);
-  ref.monkeyFeet.style.animation = "none";
+  ref.gameSection.style.animation = "none";
 }
 
 let collisionInterval = setInterval(detectCollision, 200);

@@ -38,7 +38,20 @@ body {
 .game-section {
   flex-grow: 1;
   width: 100%;
+  background-image: url("./images/cloud_4.png");
+  background-size: 450px;
+  background-repeat: repeat-x;
 }
+
+@keyframes cloudsMovement {
+  0% {
+    background-position: 0 -20px;
+  }
+  100% {
+    background-position: -1500px -20px;
+  }
+}
+
 .welcome-section {
   padding-top: 50px;
   padding-bottom: 50px;
@@ -118,91 +131,6 @@ body {
   }
 }
 
-/*------*/
-.face,
-.features {
-  &,
-  &:before,
-  &:after {
-    position: absolute;
-  }
-  &:before,
-  &:after {
-    content: "";
-  }
-}
-
-.monkey {
-  width: 62px;
-  height: 67px;
-  border-radius: 50% / 45% 45% 55% 55%;
-  position: absolute;
-  bottom: 150px;
-  right: calc(100% - 250px);
-
-  background-color: #694a16;
-
-  box-shadow: 0 48px 0 -15px #d0ba96, 0 48px 0 -6px #694a16,
-    -30px -3px 0 -24px #d0ba96, 29px -3px 0 -24px #d0ba96,
-    -29px -3px 0 -18px #694a16, 29px -3px 0 -18px #694a16,
-    -10px 76px 0 -23px #694a16, 10px 76px 0 -23px #694a16;
-
-  &:before {
-    display: none;
-
-    left: -16px;
-    top: 56px;
-    width: 30px;
-    height: 15px;
-
-    background-color: #694a16;
-    border-radius: 50% / 40%;
-
-    box-shadow: -1px 0 #d0ba96, 72px 0 #694a16, 73px 0 #d0ba96;
-  }
-
-  .face {
-    top: 29px;
-    left: 8px;
-    width: 46px;
-    height: 31px;
-    /* animation: increaseShadow 2s ease infinite alternate; */
-    background-color: #d0ba96;
-    border: 0;
-    border-radius: 48%;
-
-    box-shadow: 17px 77px 0 -11px #d0ba96, -16px 77px 0 -11px #d0ba96,
-      -26px 21px 0 -9px #694a16, 26px 21px 0 -9px #694a16;
-
-    &:before {
-      top: 6px;
-      left: 17px;
-      z-index: 5;
-      width: 4px;
-      height: 4px;
-      background-color: #2f1f05;
-
-      border-radius: 50%;
-
-      box-shadow: 7px 0 #2f1f05, -1px 0 #2f1f05, 1px 0 #2f1f05, 0 1px #2f1f05,
-        -36px 25px 0 1px #d0ba96, -37px 25px 0 1px #694a16,
-        -36px 29px 0 1px #d0ba96, -37px 29px 0 2px #694a16,
-        43px 25px 0 1px #d0ba96, 44px 25px 0 1px #694a16,
-        43px 29px 0 1px #d0ba96, 44px 29px 0 2px #694a16,
-        -5px -12px 0 1px #2f1f05, -6px -12px 0 7px #d0ba96,
-        13px -12px 0 1px #2f1f05, 14px -12px 0 7px #d0ba96;
-    }
-    &:after {
-      left: 12px;
-      top: 10px;
-      width: 22px;
-      height: 12px;
-      border-bottom: 3px solid #000;
-      border-radius: 50%;
-    }
-  }
-}
-
 .score {
   text-align: center;
   font-size: 30px;
@@ -229,4 +157,186 @@ button.exit-btn {
 .exit-btn:hover {
   transform: scale(1.1);
   transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*----Running man*/
+
+.running {
+  --color: #48c9b0;
+  --duration: 0.7s;
+  position: absolute;
+  right: calc(100% - 30px);
+  bottom: 35px;
+  .outer {
+    animation: outer var(--duration) linear infinite;
+    .body {
+      background: var(--color);
+      height: 15px;
+      width: 8px;
+      border-radius: 4px;
+      transform-origin: 4px 11px;
+      position: relative;
+      transform: rotate(32deg);
+      animation: body var(--duration) linear infinite;
+      &:before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        bottom: 16px;
+        left: 0;
+        position: absolute;
+        background: var(--color);
+      }
+      .arm,
+      .arm:before,
+      .leg,
+      .leg:before {
+        content: "";
+        width: var(--w, 11px);
+        height: 4px;
+        top: var(--t, 0);
+        left: var(--l, 2px);
+        border-radius: 2px;
+        transform-origin: 2px 2px;
+        position: absolute;
+        background: var(--c, var(--color));
+        transform: rotate(var(--r, 0deg));
+        animation: var(--name, arm-leg) var(--duration) linear infinite;
+      }
+      .arm {
+        &:before {
+          --l: 7px;
+          --name: arm-b;
+        }
+        &.front {
+          --r: 24deg;
+          --r-to: 164deg;
+          &:before {
+            --r: -48deg;
+            --r-to: -36deg;
+          }
+        }
+        &.behind {
+          --r: 164deg;
+          --r-to: 24deg;
+          &:before {
+            --r: -36deg;
+            --r-to: -48deg;
+          }
+        }
+      }
+      .leg {
+        --w: 12px;
+        --t: 11px;
+        &:before {
+          --t: 0;
+          --l: 8px;
+        }
+        &.front {
+          --r: 10deg;
+          --r-to: 108deg;
+          &:before {
+            --r: 18deg;
+            --r-to: 76deg;
+          }
+        }
+        &.behind {
+          --r: 108deg;
+          --r-to: 10deg;
+          --c: none;
+          &:before {
+            --c: var(--color);
+            --r: 76deg;
+            --r-to: 18deg;
+          }
+          &:after {
+            content: "";
+            top: 0;
+            right: 0;
+            height: 4px;
+            width: 6px;
+            clip-path: polygon(2px 0, 6px 0, 6px 4px, 0 4px);
+            border-radius: 0 2px 2px 0;
+            position: absolute;
+            background: var(--color);
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes outer {
+  50% {
+    transform: translateY(0);
+  }
+  25%,
+  75% {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes body {
+  50% {
+    transform: rotate(16deg);
+  }
+  25%,
+  75% {
+    transform: rotate(24deg);
+  }
+}
+
+@keyframes arm-leg {
+  50% {
+    transform: rotate(var(--r-to));
+  }
+}
+
+@keyframes arm-b {
+  30%,
+  70% {
+    transform: rotate(var(--r-to));
+  }
+}
+
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: inherit;
+  &:before,
+  &:after {
+    box-sizing: inherit;
+  }
+}
+
+body {
+  .running {
+    zoom: 5;
+    margin-top: -32px;
+  }
+  .dribbble {
+    position: fixed;
+    display: block;
+    right: 20px;
+    bottom: 20px;
+    img {
+      display: block;
+      height: 28px;
+    }
+  }
+  .twitter {
+    position: fixed;
+    display: block;
+    right: 64px;
+    bottom: 14px;
+    svg {
+      width: 32px;
+      height: 32px;
+      fill: #1da1f2;
+    }
+  }
 }

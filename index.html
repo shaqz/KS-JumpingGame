@@ -4,30 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="./favicon/apple-touch-icon.png"
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="./favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="./favicon/favicon-16x16.png"
-    />
-    <link rel="manifest" href="./favicon/site.webmanifest" />
+
     <title>JumpingGame</title>
   </head>
   <body>
     <section class="welcome-section">
       <div class="welcome-text">
         <h2>Welcome to the Jumping Game!</h2>
-        <h1>MONKEY vs ZOMBIES</h1>
-        <p>Help the monkey survive</p>
+        <h1>HUMANITY vs ZOMBIES</h1>
+        <p>Help the man survive</p>
       </div>
       <p class="score visually-hidden">Game score: <span id="score">0</span></p>
       <button type="button" class="start-game-btn">Start the Game</button>
@@ -35,10 +20,16 @@
     <section class="score-section">
       <button type="button" class="restart-game-btn">Restart</button>
     </section>
-
     <section class="game-section">
-      <div class="monkey body" id="character">
-        <div class="face"></div>
+      <div class="running" id="character">
+        <div class="outer">
+          <div class="" id="man-body">
+            <div class="arm behind"></div>
+            <div class="arm front"></div>
+            <div class="leg behind"></div>
+            <div class="leg front"></div>
+          </div>
+        </div>
       </div>
     </section>
     <div class="obstacles"></div>
