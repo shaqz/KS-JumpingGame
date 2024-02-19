@@ -138,8 +138,9 @@ function detectCollision() {
     const zombieRect = zombie.getBoundingClientRect();
 
     if (
-      zombieRect.right < characterRect.right + 265 &&
-      characterRect.bottom > 102
+      zombieRect.right < characterRect.right + 220 &&
+      characterRect.bottom > 75 &&
+      zombieRect.right > 90
     ) {
       handleCollision();
     }
