@@ -27,6 +27,7 @@ jumpingSound.volume = 0.3;
 lossSound.volume = 0.3;
 let bgSoundIntervalID = null;
 let timeOutId = null;
+let collisionInterval = null;
 
 ref.exitGameBtn.addEventListener("click", exitGame);
 ref.startGameBtn.addEventListener("click", onstartGameBtnClick);
@@ -58,6 +59,7 @@ function keyboardControl(event) {
 
 function jump() {
   if (!charJump && !gameOver) {
+<<<<<<< Updated upstream
     let position = 150;
     let jumpInterval = setInterval(function () {
       if (position >= 450) {
@@ -76,6 +78,10 @@ function jump() {
       ref.character.style.bottom = position + "px";
       charJump = true;
     }, 20);
+=======
+    charJump = true;
+    velocity = -12; // Adjust the initial jump velocity
+>>>>>>> Stashed changes
   }
 }
 
@@ -102,12 +108,12 @@ function generateObstacle() {
 
       if (obstaclePosition < -50) {
         clearInterval(obstacleInterval);
-        try {
-          ref.obstacles.removeChild(obstacle);
-        } catch {
-          console.log("errorrr");
-        }
+        ref.obstacles.removeChild(obstacle);
         showScore();
+      }
+
+      if (detectCollision(obstacle)) {
+        handleCollision();
       }
     }
   }, 15);
@@ -117,30 +123,16 @@ function generateObstacle() {
   }
 }
 
-function getRandomZombieImageUrl() {
-  const zombieImages = [
-    "zombie1.png",
-    "zombie2.png",
-    "zombie3.png",
-    "zombie4.png",
-  ];
-  const randomIndex = Math.floor(Math.random() * zombieImages.length);
-  return `images/obstacles/zombies/${zombieImages[randomIndex]}`;
-}
-
-function detectCollision() {
+function detectCollision(obstacle) {
   const characterRect = ref.character.getBoundingClientRect();
-  const zombies = document.querySelectorAll(".obstacle");
-  zombies.forEach((zombie) => {
-    const zombieRect = zombie.getBoundingClientRect();
-    if (
-      zombieRect.right < characterRect.right + 50 &&
-      zombieRect.right > characterRect.right - 50 &&
-      characterRect.top > 260
-    ) {
-      handleCollision();
-    }
-  });
+  const obstacleRect = obstacle.getBoundingClientRect();
+
+  return (
+    characterRect.right > obstacleRect.left &&
+    characterRect.left < obstacleRect.right &&
+    characterRect.bottom > obstacleRect.top &&
+    characterRect.top < obstacleRect.bottom
+  );
 }
 
 function handleCollision() {
@@ -156,8 +148,6 @@ function handleCollision() {
   clearTimeout(timeOutId);
   ref.monkeyFeet.style.animation = "none";
 }
-
-let collisionInterval = setInterval(detectCollision, 200);
 
 function showScore() {
   score++;
@@ -187,6 +177,7 @@ function exitGame() {
     }
   }
 }
+
 function resetGame() {
   charJump = false;
   gameOver = false;
