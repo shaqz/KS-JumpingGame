@@ -69,11 +69,16 @@ function jump() {
             clearInterval(fallInterval);
             charJump = false;
           } else {
+<<<<<<< Updated upstream
             position -= 10;
+=======
+            position -= 2;
+>>>>>>> Stashed changes
             ref.character.style.bottom = position + "px";
           }
-        }, 20);
+        }, 5);
       }
+<<<<<<< Updated upstream
       position += 30;
       ref.character.style.bottom = position + "px";
       charJump = true;
@@ -81,6 +86,12 @@ function jump() {
 =======
     charJump = true;
     velocity = -12; // Adjust the initial jump velocity
+>>>>>>> Stashed changes
+=======
+      position += 2;
+      ref.character.style.bottom = position + "px";
+      charJump = true;
+    }, 5);
 >>>>>>> Stashed changes
   }
 }
@@ -96,8 +107,13 @@ function generateObstacle() {
   obstacle.appendChild(zombieImage);
   ref.obstacles.appendChild(obstacle);
 
+<<<<<<< Updated upstream
   let obstaclePosition = 1000;
   let obstacleSpeed = 5;
+=======
+  let obstaclePosition = 3000;
+  let obstacleSpeed = 10;
+>>>>>>> Stashed changes
 
   obstacle.style.left = obstaclePosition + "px";
 
@@ -106,7 +122,7 @@ function generateObstacle() {
       obstaclePosition -= obstacleSpeed;
       obstacle.style.left = obstaclePosition + "px";
 
-      if (obstaclePosition < -50) {
+      if (obstaclePosition < -10) {
         clearInterval(obstacleInterval);
         ref.obstacles.removeChild(obstacle);
         showScore();
@@ -116,10 +132,10 @@ function generateObstacle() {
         handleCollision();
       }
     }
-  }, 15);
+  }, 50);
 
   if (!gameOver) {
-    timeOutId = setTimeout(generateObstacle, 3000);
+    timeOutId = setTimeout(generateObstacle, 5000);
   }
 }
 
